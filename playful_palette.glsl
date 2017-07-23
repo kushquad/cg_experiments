@@ -27,19 +27,29 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     }
     positions[minindex].xy = mouse.xy;
        
+    // Metaball computation
     float contribution = 0.0;
+    
+    // 
     vec4 weight_num = vec4(0.0, 0.0, 0.0, 1.0);
     float weight_denom = 0.0;
+    
     for(int i=0; i<NUM_BLOBS; i++)
     {
+       	// Calculate gradient based on distance from nuclei
         float dist = distance(positions[i].xy, fragCoord.xy);
         float fraction = positions[i].z/dist;
         float temp = 1.0/(dist*dist);
         weight_num += temp*colors[i];
-        weight_denom += temp; 
+        weight_denom += temp;
+        
         contribution += fraction;
     }
     
+    // Metaball computation
     if(contribution>1.0)
     	fragColor = weight_num/weight_denom;
+    else
+        // Antialiasing computation
+        fragColor = mix(backgroundcol, weight_num/weight_denom, smoothstep(0.0,1.0, clamp(contribution-0.96, 0.0, 1.0)/0.04));
 }
