@@ -17,20 +17,25 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     
     // Implement mouse behavior
     vec2 mouse = iMouse.xy;
-    float mindist = 1e20;
+    
+    float mindist = 100000000.0;
     int minindex = -1;
     for(int i=0; i<NUM_BLOBS; i++)
     {
     	float dist = distance(positions[i].xy, mouse.xy);   
         if(dist<mindist)
+        {
     		minindex = i;
+        	mindist = dist;
+        }
     }
-    positions[minindex].xy = mouse.xy;
+    if(mouse.xy != vec2(0.0, 0.0))
+        positions[minindex].xy = mouse.xy;
        
     // Metaball computation
     float contribution = 0.0;
     
-    // 
+    // Gradient computation
     vec4 weight_num = vec4(0.0, 0.0, 0.0, 1.0);
     float weight_denom = 0.0;
     
