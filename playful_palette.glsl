@@ -1,3 +1,6 @@
+// Inspired by the SIGGRAPH 2017 paper by Maria (Masha) Shugrina, Jingwan Lu, and Stephen DiVerdi.
+// https://www.youtube.com/watch?v=kapQfn7K0fQ&feature=share
+
 #define NUM_BLOBS 3
 
 // Define all colours and positions of the nuclei
